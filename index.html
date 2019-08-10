@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Take a Fish picture With JavaScript</title>
+    <title>Take a Fish Market</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -16,7 +16,7 @@
 <body>
 
 
-<h3>Demo: Take a Selfie With JavaScript</h3>
+<h3>Take a Fish </h3>
 
 <div class="container">
 
@@ -36,6 +36,14 @@
 
     <!-- Hidden canvas element. Used for taking snapshot of video. -->
     <canvas></canvas>
+	<canvas id="camera--sensor"></canvas>
+        <!-- Camera view -->
+        <video id="camera--view" autoplay playsinline></video>
+        <!-- Camera output -->
+        <img src="//:0" alt="" id="camera--output">
+        <!-- Camera trigger -->
+        <button id="camera--trigger">Take a picture</button>
+		
 
   </div>
 
