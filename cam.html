@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-    1.3.2.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<script src="phonegap.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+var button = document.getElementById('capture');
+button.addEventListener('click', camera);
+
+var canvas = document.getElementById('myCanvas');
+var context = canvas.getContext('2d');
+
+function camera() {
+    function onSuccess(imageData) {
+        var image = new Image();
+        image.src = "data:image/jpeg;base64," + imageData;
+        image.onload = function () {
+            var height = 100;
+            var width = 100;
+            context.drawImage(image, width, height);
+        }
+    }
+
+    function onFail(message) {
+        console.log('Failed because: ' + message);
+    }
+
+    navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL
+    });
+}
+
+</script>
+
+
+<style>
+#myCanvas {
+    width: 400px;
+    height: 400px;
+}
+</style>
+
+
+</head>
+<body>
+
+<h1>Watermark Camera</h1>
+
+<button id="capture">Capture Photo</button>
+<br>
+<p>Canvas:</p>
+
+    <canvas id="myCanvas">Your browser doesn't support me!</canvas>
+	
+
+<canvas id="myCanvas"></canvas>
+</body>
+</html>
+
+
+
+
+
+
+	
+
