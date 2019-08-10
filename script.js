@@ -6,17 +6,7 @@ const cameraView = document.querySelector("#camera--view"),
     cameraSensor = document.querySelector("#camera--sensor"),
     cameraTrigger = document.querySelector("#camera--trigger")
 // Access the device camera and stream to cameraView
-function cameraStart() {
-    navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(function(stream) {
-        track = stream.getTracks()[0];
-        cameraView.srcObject = stream;
-    })
-    .catch(function(error) {
-        console.error("Oops. Something is broken.", error);
-    });
-}
+
 // Take a picture when cameraTrigger is tapped
 cameraTrigger.onclick = function() {
     cameraSensor.width = cameraView.videoWidth;
@@ -25,8 +15,6 @@ cameraTrigger.onclick = function() {
     cameraOutput.src = cameraSensor.toDataURL("Download/webp");
     cameraOutput.classList.add("taken");
 };
-// Start the video stream when the window loads
-window.addEventListener("load", cameraStart, false);
 
 
 //add new 
@@ -71,16 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Play the video element to start the stream.
                 video.play();
-				navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(function(stream) {
-        track = stream.getTracks()[0];
-        cameraView.srcObject = stream;
-              })
-    .catch(function(error) {
-        console.error("Oops. Something is broken.", error);
-    });
-	
+				
 				
                 video.onplay = function() {
                     showVideo();
@@ -103,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // so here we're using a button to start it manually.
     start_camera.addEventListener("click", function(e){
 
+          // Start the video stream when the window loads
+          window.addEventListener("load", cameraStart, false);
         e.preventDefault();
 
         // Start video playback manually.
@@ -155,11 +136,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   
     function showVideo(){
+		
+		
         // Display the video stream and the controls.
 
-      //  hideUI();
-      //  video.classList.add("visible");
-      //  controls.classList.add("visible");
+        hideUI();
+        video.classList.add("visible");
+        controls.classList.add("visible");
 		
 		navigator.mediaDevices
         .getUserMedia(constraints)
@@ -194,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
             context.drawImage(video, 0, 0, width, height);
 
             // Turn the canvas image into a dataURL that can be used as a src for our photo.
-            return hidden_canvas.toDataURL('image/png');
+            return hidden_canvas.toDataURL('Download/image.png');
         }
     }
 
@@ -220,6 +203,20 @@ document.addEventListener('DOMContentLoaded', function () {
         video.classList.remove("visible");
         snap.classList.remove("visible");
         error_message.classList.remove("visible");
+    }
+	
+	function cameraStart() {
+		
+
+    navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(function(stream) {
+        track = stream.getTracks()[0];
+        cameraView.srcObject = stream;
+    })
+    .catch(function(error) {
+        console.error("Oops. Something is broken.", error);
+    });
     }
 
 });
