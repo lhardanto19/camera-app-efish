@@ -1,23 +1,3 @@
-// Set constraints for the video stream
-var constraints = { video: { facingMode: "user" }, audio: false };
-// Define constants
-const cameraView = document.querySelector("#camera--view"),
-    cameraOutput = document.querySelector("#camera--output"),
-    cameraSensor = document.querySelector("#camera--sensor"),
-    cameraTrigger = document.querySelector("#camera--trigger")
-// Access the device camera and stream to cameraView
-
-// Take a picture when cameraTrigger is tapped
-cameraTrigger.onclick = function() {
-    cameraSensor.width = cameraView.videoWidth;
-    cameraSensor.height = cameraView.videoHeight;
-    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-    cameraOutput.src = cameraSensor.toDataURL("Download/webp");
-    cameraOutput.classList.add("taken");
-};
-
-
-//add new 
 document.addEventListener('DOMContentLoaded', function () {
 
     // References to all the element we will need.
@@ -52,19 +32,14 @@ document.addEventListener('DOMContentLoaded', function () {
             // Success Callback
             function(stream){
 
-
                 // Create an object URL for the video stream and
                 // set it as src of our HTLM video element.
                 video.src = window.URL.createObjectURL(stream);
 
                 // Play the video element to start the stream.
                 video.play();
-				
-				
                 video.onplay = function() {
                     showVideo();
-					
-							
                 };
          
             },
@@ -82,8 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // so here we're using a button to start it manually.
     start_camera.addEventListener("click", function(e){
 
-          // Start the video stream when the window loads
-          window.addEventListener("load", cameraStart, false);
         e.preventDefault();
 
         // Start video playback manually.
@@ -136,25 +109,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   
     function showVideo(){
-		
-		
         // Display the video stream and the controls.
 
         hideUI();
         video.classList.add("visible");
         controls.classList.add("visible");
-		
-		navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(function(stream) {
-        track = stream.getTracks()[0];
-        cameraView.srcObject = stream;
-    })
-    .catch(function(error) {
-        console.error("Oops. Something is broken.", error);
-    });
-	
-	
     }
 
 
@@ -177,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
             context.drawImage(video, 0, 0, width, height);
 
             // Turn the canvas image into a dataURL that can be used as a src for our photo.
-            return hidden_canvas.toDataURL('Download/image.png');
+            return hidden_canvas.toDataURL('image/png');
         }
     }
 
@@ -204,20 +163,5 @@ document.addEventListener('DOMContentLoaded', function () {
         snap.classList.remove("visible");
         error_message.classList.remove("visible");
     }
-	
-	function cameraStart() {
-		
-
-    navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(function(stream) {
-        track = stream.getTracks()[0];
-        cameraView.srcObject = stream;
-    })
-    .catch(function(error) {
-        console.error("Oops. Something is broken.", error);
-    });
-    }
 
 });
-
