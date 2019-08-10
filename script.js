@@ -7,11 +7,10 @@ cameraTrigger.onclick = function() {
     cameraSensor.width = cameraView.videoWidth;
     cameraSensor.height = cameraView.videoHeight;
     cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-    cameraOutput.src = cameraSensor.toDataURL("image/webp");
+    cameraOutput.src = cameraSensor.toDataURL("Download/image.png");
     cameraOutput.classList.add("taken");
 };
-// Start the video stream when the window loads
-window.addEventListener("load", cameraStart, false);
+
 function cameraStart() {
     navigator.mediaDevices
         .getUserMedia(constraints)
@@ -32,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         start_camera = document.querySelector('#start-camera'),
         controls = document.querySelector('.controls'),
         take_photo_btn = document.querySelector('#take-photo'),
+		take_video_btn = document.querySelector('#take-video'),
         delete_photo_btn = document.querySelector('#delete-photo'),
         download_photo_btn = document.querySelector('#download-photo'),
         error_message = document.querySelector('#error-message');
@@ -132,6 +132,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
+    take-video_btn.addEventListener("click", function(e){
+
+        e.preventDefault();
+		// Start the video stream when the window loads
+		window.addEventListener("load", cameraStart, false);
+
+        cameraSensor.width = cameraView.videoWidth;
+		cameraSensor.height = cameraView.videoHeight;
+		cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+		cameraOutput.src = cameraSensor.toDataURL("Download/image.png");
+		cameraOutput.classList.add("taken");
+		
+        // Disable delete and save buttons
+        delete_photo_btn.classList.add("disabled");
+        download_photo_btn.classList.add("disabled");
+
+        // Resume playback of stream.
+        //video.play();
+
+    });
+
 
   
     function showVideo(){
@@ -140,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
         hideUI();
         video.classList.add("visible");
         controls.classList.add("visible");
+		
     }
 
 
