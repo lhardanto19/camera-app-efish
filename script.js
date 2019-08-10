@@ -22,11 +22,12 @@ cameraTrigger.onclick = function() {
     cameraSensor.width = cameraView.videoWidth;
     cameraSensor.height = cameraView.videoHeight;
     cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-    cameraOutput.src = cameraSensor.toDataURL("image/webp");
+    cameraOutput.src = cameraSensor.toDataURL("Download/webp");
     cameraOutput.classList.add("taken");
 };
 // Start the video stream when the window loads
 window.addEventListener("load", cameraStart, false);
+
 
 //add new 
 document.addEventListener('DOMContentLoaded', function () {
@@ -63,14 +64,28 @@ document.addEventListener('DOMContentLoaded', function () {
             // Success Callback
             function(stream){
 
+
                 // Create an object URL for the video stream and
                 // set it as src of our HTLM video element.
                 video.src = window.URL.createObjectURL(stream);
 
                 // Play the video element to start the stream.
                 video.play();
+				navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(function(stream) {
+        track = stream.getTracks()[0];
+        cameraView.srcObject = stream;
+              })
+    .catch(function(error) {
+        console.error("Oops. Something is broken.", error);
+    });
+	
+				
                 video.onplay = function() {
                     showVideo();
+					
+							
                 };
          
             },
@@ -142,9 +157,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function showVideo(){
         // Display the video stream and the controls.
 
-        hideUI();
-        video.classList.add("visible");
-        controls.classList.add("visible");
+      //  hideUI();
+      //  video.classList.add("visible");
+      //  controls.classList.add("visible");
 		
 		navigator.mediaDevices
         .getUserMedia(constraints)
@@ -208,3 +223,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
